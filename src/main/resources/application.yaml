@@ -15,10 +15,19 @@ spring:
 
 server:
   shutdown: graceful
+  servlet:
+    session:
+      persistent: false
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
+    org.springframework: INFO
+    org.hibernate: INFO
+    com.zaxxer.hikari: INFO
+    rai.nexus.team_pulse: DEBUG
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - [%X{traceId}] %msg%n)"
 
 app:
   security:
