@@ -3,10 +3,8 @@ spring:
     banner-mode: off
   config:
     import: optional:file:.env[.properties]
-  datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/team_pulse}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -17,9 +15,23 @@ spring:
 
 server:
   shutdown: graceful
+  servlet:
+    session:
+      persistent: false
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
+    org.springframework: INFO
+    org.hibernate: INFO
+    com.zaxxer.hikari: INFO
+    rai.nexus.team_pulse: DEBUG
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - [%X{traceId}] %msg%n)"
 
-
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      access-token-expiration: ${JWT_ACCESS_EXPIRATION}
+      refresh-token-expiration: ${JWT_REFRESH_EXPIRATION}
