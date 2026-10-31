@@ -8,13 +8,12 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import rai.nexus.team_pulse.common.service.user.CustomUserDetails;
+import rai.nexus.team_pulse.common.service.user.SecurityUser;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,14 +41,14 @@ public class JwtService {
         this.parser = Jwts.parser().verifyWith(secretKey).build();
     }
 
-    public String generateAccessToken(CustomUserDetails user) {
+    public String generateAccessToken(SecurityUser user) {
 
         Map<String,Object> extraClaims = Map.of("role", "role");
 
         return buildToken(user, TYPE_ACCESS, props.getAccessTokenExpiration(), extraClaims);
     }
 
-    public String generateRefreshToken(CustomUserDetails user) {
+    public String generateRefreshToken(SecurityUser user) {
         return buildToken(user, TYPE_REFRESH, props.getRefreshTokenExpiration(), Map.of());
     }
 
@@ -79,7 +78,7 @@ public class JwtService {
     }
 
     private  String buildToken(
-            CustomUserDetails user,
+            SecurityUser user,
             String type,
             Duration ttl,
             Map<String, Object> extraClaims)

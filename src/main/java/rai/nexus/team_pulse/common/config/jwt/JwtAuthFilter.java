@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
-import rai.nexus.team_pulse.common.service.user.CustomUserDetailsService;
+import rai.nexus.team_pulse.common.service.user.SecurityUserService;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private  final CustomUserDetailsService userDetailsService;
+    private  final SecurityUserService userDetailsService;
 
     @Override
     protected void doFilterInternal(

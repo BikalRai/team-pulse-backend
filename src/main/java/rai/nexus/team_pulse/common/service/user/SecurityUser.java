@@ -1,32 +1,35 @@
 package rai.nexus.team_pulse.common.service.user;
 
+import lombok.AllArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import rai.nexus.team_pulse.modules.user.entity.User;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
-public class CustomUserDetails implements UserDetails {
+@AllArgsConstructor
+public class SecurityUser implements UserDetails {
 
-    private UUID id;
-    private String email;
-    private Boolean isActive;
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(
+                new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+        );
     }
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return user.getEmail();
     }
 
     @Override
@@ -46,6 +49,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.getIsActive();
     }
 }
