@@ -42,6 +42,23 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> success(
+
+            String message,
+            T data,
+            HttpServletRequest request
+    ) {
+        return new ApiResponse<>(
+                true,
+                HttpStatus.OK.value(),
+                message,
+                data,
+                null,
+                null,
+                request.getRequestURI()
+        );
+    };
+
+    public static <T> ApiResponse<T> success(
             HttpStatus status,
             String message,
             T data,
@@ -54,6 +71,23 @@ public class ApiResponse<T> {
                 data,
                 null,
                 null,
+                request.getRequestURI()
+        );
+    };
+
+    public static <T> ApiResponse<T> successPaginated(
+            String message,
+            T data,
+            PaginationMeta pagination,
+            HttpServletRequest request
+    ) {
+        return new ApiResponse<>(
+                true,
+                HttpStatus.OK.value(),
+                message,
+                data,
+                null,
+                pagination,
                 request.getRequestURI()
         );
     };
